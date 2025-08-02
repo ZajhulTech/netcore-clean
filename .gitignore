@@ -1,0 +1,97 @@
+# Ignore build results
+bin/
+obj/
+[Bb]uild/
+[Ll]ogs/
+*.log
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vs/
+.vscode/
+
+# Rider-specific files
+.idea/
+
+# ASP.NET Core secrets
+**/secrets.json
+*.db
+*.db-shm
+*.db-wal
+
+# Dotnet CLI
+.project
+*.DS_Store
+*.swp
+*.sln.cache
+
+# NuGet packages
+*.nupkg
+*.snupkg
+.nuget/
+
+# VS Code working folder
+.vscode/
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# StyleCop
+StyleCopReport.xml
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+.idea_modules/
+
+# Build artifacts
+artifacts/
+
+# Publish output
+publish/
+wwwroot/dist/
+wwwroot/node_modules/
+node_modules/
+
+# Logs
+*.log
+*.tlog
+
+# Others
+*.sln.docstates
+*.orig
+*.rej
+
+# dotenv
+.env
+.env.*
+
+# coverage tools
+coverage/
+lcov-report/
+coverage.lcov
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
