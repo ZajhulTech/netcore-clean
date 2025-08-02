@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using PaymentDemo.Infra.DataBase;
 using PaymentDemo.Interfaces.UserStorys;
+using PaymentDemo.Models.Api;
 using PaymentDemo.Models.DataBase;
 using PaymentDemo.Models.requests;
 using PaymentDemo.Models.response;
@@ -21,17 +23,17 @@ namespace PaymentDemo.UserStorys
             _context = context;
         }
 
-        public async Task<List<SalesDetailResponse>> getSales()
+        public async Task<Response<List<SalesDetailResponse>>> getSales()
         {
+            List<SalesDetailResponse> data = new List<SalesDetailResponse>();
+            Response<List<SalesDetailResponse>> result = new Response<List<SalesDetailResponse>>();
 
-            List<SalesDetailResponse> result = new List<SalesDetailResponse>();
+            var saleDetailsModelList = await _context.VwSaleDetails.ToListAsync().ConfigureAwait(false);
 
-            var data = await _context.VwSaleDetails.ToListAsync().ConfigureAwait(false);
-
-            foreach (var item in data)
+            foreach (var item in saleDetailsModelList)
             {
 
-                result.Add(new SalesDetailResponse
+                data.Add(new SalesDetailResponse
                 {
                     Amount = item.Amount,
                     CreatedAt = item.CreatedAt,
@@ -47,14 +49,17 @@ namespace PaymentDemo.UserStorys
                     UnitPrice = item.UnitPrice
                 });
             }
-
+            result.Data = data;
+            result.AddStatusCode(200);
             return result;
         }
 
-        public async Task<List<ProductResponse>> getProducts()
+        public async Task<Response<List<ProductResponse>>> getProducts()
         {
+            List<ProductResponse> data = new List<ProductResponse>();
+            Response<List<ProductResponse>> result = new Response<List<ProductResponse>>();
 
-            var data = await _context.Products.Select(item => new ProductResponse
+            data = await _context.Products.Select(item => new ProductResponse
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -62,12 +67,15 @@ namespace PaymentDemo.UserStorys
                 CreatedAt = item.CreatedAt
             }).ToListAsync().ConfigureAwait(false);
 
-
-            return data;
+            result.Data = data;
+            result.AddStatusCode(200);
+            return result;
         }
 
-        public async Task<ProductResponse> setProducts(productsResquest product  )
+        public async Task<Response<ProductResponse>> setProducts(productsResquest product  )
         {
+       
+            Response<ProductResponse> result = new Response<ProductResponse>();
 
             var Product = new Product{
                 Price = product.Price,
@@ -75,11 +83,10 @@ namespace PaymentDemo.UserStorys
                 CreatedBy = "manager",
             };
 
-            var data = await _context.Products.AddAsync(Product).ConfigureAwait(false);
-
+            var data1 = await _context.Products.AddAsync(Product).ConfigureAwait(false);
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            ProductResponse result = new ProductResponse
+            ProductResponse data = new ProductResponse
             { 
                 Name = Product.Name,
                 Price = Product.Price,    
@@ -87,7 +94,8 @@ namespace PaymentDemo.UserStorys
                 CreatedAt = Product.CreatedAt
             
             };
-
+            result.Data = data;
+            result.AddStatusCode(201);
             return result;
         }
 

@@ -1,4 +1,5 @@
-﻿using PaymentDemo.Models.requests;
+﻿using PaymentDemo.Models.Api;
+using PaymentDemo.Models.requests;
 using PaymentDemo.Models.response;
 
 namespace PaymentDemo.Interfaces.UserStorys
@@ -8,8 +9,8 @@ namespace PaymentDemo.Interfaces.UserStorys
         string Description { get; set; }
         string Name { get; set; }
 
-        Task<List<ProductResponse>> getProducts();
-        Task<List<SalesDetailResponse>> getSales();
-        Task<ProductResponse> setProducts(productsResquest product);
+        Task<Response<List<ProductResponse>>> getProducts();
+        Task<Response<List<SalesDetailResponse>>> getSales();
+        Task<Response<ProductResponse>> setProducts(productsResquest product);
     }
 }

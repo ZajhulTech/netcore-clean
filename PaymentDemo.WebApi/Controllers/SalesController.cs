@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Api.infrastructure.Api;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PaymentDemo.Interfaces.UserStorys;
 using PaymentDemo.Models.requests;
@@ -18,7 +19,7 @@ namespace PaymentDemo.WebApi.Controllers
 
             var response = await _isalesUserStory.getSales().ConfigureAwait(false);
            
-            return Ok(response);
+            return response.GetActionResult();
         }
 
         [HttpGet("Products")]
@@ -27,7 +28,7 @@ namespace PaymentDemo.WebApi.Controllers
 
             var response = await _isalesUserStory.getProducts().ConfigureAwait(false);
 
-            return Ok(response);
+            return response.GetActionResult();
         }
 
         [HttpPost("Products")]
@@ -36,7 +37,7 @@ namespace PaymentDemo.WebApi.Controllers
 
             var response = await _isalesUserStory.setProducts(request).ConfigureAwait(false);
 
-            return Created("",response);
+            return response.GetCustomActionResult();
         }
 
 
